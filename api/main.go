@@ -35,6 +35,12 @@ func Initialisation() *echo.Echo {
 		os.Exit(1)
 	}
 
+	err = model.InitSearch()
+	if err != nil {
+		fmt.Println("Failed to initialise word-index", err)
+		os.Exit(1)
+	}
+
 	e := echo.New()
 	routes.InitRoutes(e)
 
@@ -42,6 +48,11 @@ func Initialisation() *echo.Echo {
 }
 
 func Termination() {
+
+	err := model.TermIndex()
+	if err != nil {
+		fmt.Println("Failed to close index:", err)
+	}
 
 	model.TermModel()
 

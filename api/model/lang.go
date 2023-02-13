@@ -3,7 +3,9 @@ package model
 //go:generate go run github.com/objectbox/objectbox-go/cmd/objectbox-gogen
 
 type Lang struct {
-	ID   uint64 `json:"id"`
-	Code string `json:"code"`
-	Name string `json:"name"`
+	ID            uint64   `json:"id" objectbox:"id"`
+	Code          string   `json:"code" objectbox:"unique:index"`
+	Name          string   `json:"name"`
+	Desc          string   `json:"name"`
+	AncestorCodes []string `json:"ancestors"`
 }

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:2005915493830902783",
-      "lastPropertyId": "3:5762888112877023092",
+      "lastPropertyId": "5:7067698906285608907",
       "name": "Lang",
       "properties": [
         {
@@ -17,24 +17,136 @@
         {
           "id": "2:7268864952445343482",
           "name": "Code",
-          "type": 9
+          "indexId": "1:3620402759221610712",
+          "type": 9,
+          "flags": 2080
         },
         {
           "id": "3:5762888112877023092",
           "name": "Name",
           "type": 9
+        },
+        {
+          "id": "4:5054523526498907470",
+          "name": "AncestorCodes",
+          "type": 30
+        },
+        {
+          "id": "5:7067698906285608907",
+          "name": "Desc",
+          "type": 9
+        }
+      ]
+    },
+    {
+      "id": "2:4090040215247386919",
+      "lastPropertyId": "10:8542569556331125443",
+      "name": "Word",
+      "properties": [
+        {
+          "id": "1:8825766356638684458",
+          "name": "ID",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3662351382044855010",
+          "name": "Orthography",
+          "type": 9
+        },
+        {
+          "id": "3:1658748208013762784",
+          "name": "Romanisation",
+          "indexId": "2:3733962387521082433",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "4:1186649573810650960",
+          "name": "Pronunciation",
+          "type": 9
+        },
+        {
+          "id": "5:4326212935972100663",
+          "name": "Meanings",
+          "type": 30
+        },
+        {
+          "id": "7:1207373486610622438",
+          "name": "Etymology",
+          "type": 9
+        },
+        {
+          "id": "8:8444455463654819396",
+          "name": "RootWord",
+          "type": 6,
+          "flags": 8192
+        },
+        {
+          "id": "9:7321360575688309804",
+          "name": "Notes",
+          "type": 9
+        },
+        {
+          "id": "10:8542569556331125443",
+          "name": "Language",
+          "indexId": "5:8411931306667868795",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "Lang"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:1900158107741578585",
+          "name": "Tags",
+          "targetId": "3:1372788645921107360"
+        }
+      ]
+    },
+    {
+      "id": "3:1372788645921107360",
+      "lastPropertyId": "4:5225491430825792962",
+      "name": "Tag",
+      "properties": [
+        {
+          "id": "1:3952175519945178580",
+          "name": "ID",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8622896346386455710",
+          "name": "Tag",
+          "indexId": "4:4198617945191567570",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "3:2167833608446598323",
+          "name": "Name",
+          "type": 9
+        },
+        {
+          "id": "4:5225491430825792962",
+          "name": "Description",
+          "type": 9
         }
       ]
     }
   ],
-  "lastEntityId": "1:2005915493830902783",
-  "lastIndexId": "",
-  "lastRelationId": "",
+  "lastEntityId": "3:1372788645921107360",
+  "lastIndexId": "5:8411931306667868795",
+  "lastRelationId": "1:1900158107741578585",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredIndexUids": [
+    4803817190877242390
+  ],
+  "retiredPropertyUids": [
+    839034900364618846
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

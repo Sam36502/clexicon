@@ -13,7 +13,11 @@ func ObjectBoxModel() *objectbox.Model {
 	model.GeneratorVersion(6)
 
 	model.RegisterBinding(LangBinding)
-	model.LastEntityId(1, 2005915493830902783)
+	model.RegisterBinding(WordBinding)
+	model.RegisterBinding(TagBinding)
+	model.LastEntityId(3, 1372788645921107360)
+	model.LastIndexId(5, 8411931306667868795)
+	model.LastRelationId(1, 1900158107741578585)
 
 	return model
 }
