@@ -3,6 +3,7 @@ package routes
 import (
 	"clexicon-api/model"
 	"clexicon-api/responses"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -39,49 +40,76 @@ func PutWord(ctx echo.Context) error {
 }
 
 func GetWord(ctx echo.Context) error {
-
-	// Try with id, if present
 	idStr := ctx.QueryParam("id")
 	if idStr != "" {
 		return getWordByID(ctx, idStr)
 	}
 
-	// Else search based on params
-	model.G_WordSearchQuery.SetStringParams(model.Word_.Orthography, ctx.QueryParam("orth"))
-	model.G_WordSearchQuery.SetStringParams(model.Word_.Romanisation, ctx.QueryParam("rom"))
-	model.G_WordSearchQuery.SetStringParams(model.Word_.Pronunciation, ctx.QueryParam("ipa"))
-	model.G_WordSearchQuery.SetStringParams(model.Word_.Meanings, ctx.QueryParam("m"))
-
-	words, err := model.G_WordSearchQuery.Find()
-	if err != nil {
-		return responses.GetAPIError(ctx, responses.APIERR_MODEL_FAIL, err)
-	}
-
-	return ctx.JSON(http.StatusOK, words)
+	return responses.GetAPIError(ctx, responses.APIERR_INVALID_PARAM, idStr, "Word-ID must be a valid positive integer")
 }
 
 func SearchWord(ctx echo.Context) error {
-	/*
-		lang, err := getLang(ctx)
-		if err != nil {
-			return err
-		}
-	*/
+	lang, err := getLang(ctx)
+	if err != nil {
+		return err
+	}
 
 	queryStr := ctx.QueryParam("q")
 	if queryStr != "" {
+
+		// Search index for words matching
 		query := bleve.NewFuzzyQuery(queryStr)
 		query.SetFuzziness(2)
-		search := bleve.NewSearchRequest(query)
+
+		idFloat := float64(lang.ID)
+		inc := true
+		langQ := bleve.NewNumericRangeInclusiveQuery(&idFloat, &idFloat, &inc, &inc)
+		langQ.SetField("language.id")
+
+		combQ := bleve.NewConjunctionQuery(langQ, query)
+
+		search := bleve.NewSearchRequest(combQ)
 		results, err := model.G_WordIndex.Search(search)
 		if err != nil {
-			return ctx.JSON(http.StatusInternalServerError, err)
+			return responses.GetAPIError(ctx, responses.APIERR_INDEX_FAIL, err)
 		}
 
-		return ctx.JSON(http.StatusOK, results)
+		// Fetch words that match the query
+		words := make([]*model.Word, results.Total)
+		for i, hit := range results.Hits {
+			id, err := strconv.ParseUint(hit.ID, 10, 64)
+			if err != nil {
+				return responses.GetAPIError(
+					ctx,
+					responses.APIERR_INDEX_FAIL,
+					fmt.Errorf("Failed to fetch word for index ID '%s'; invalid ID", hit.ID),
+				)
+			}
+
+			word, err := model.G_WordBox.Get(id)
+			if err != nil {
+				return responses.GetAPIError(
+					ctx,
+					responses.APIERR_INDEX_FAIL,
+					fmt.Errorf("Failed to fetch word for index ID '%s'; %v", hit.ID, err),
+				)
+			}
+
+			if word == nil {
+				return responses.GetAPIError(
+					ctx,
+					responses.APIERR_INDEX_FAIL,
+					fmt.Errorf("Failed to fetch word for index ID '%s'; No word with that ID exists", hit.ID),
+				)
+			}
+
+			words[i] = word
+		}
+
+		return ctx.JSON(http.StatusOK, words)
 	}
 
-	return ctx.NoContent(http.StatusNoContent)
+	return ctx.JSON(http.StatusNoContent, []model.Word{})
 }
 
 func getWordByID(ctx echo.Context, idStr string) error {

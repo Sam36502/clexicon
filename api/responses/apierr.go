@@ -20,6 +20,7 @@ const (
 	APIERR_INVALID_PARAM  = "invalid_param"
 	APIERR_INVALID_ERROR  = "invalid_error"
 	APIERR_MODEL_FAIL     = "model_fail"
+	APIERR_INDEX_FAIL     = "index_fail"
 )
 
 var g_ErrorTemplates = map[string]APIError{
@@ -47,6 +48,11 @@ var g_ErrorTemplates = map[string]APIError{
 		httpCode: http.StatusInternalServerError,
 		Code:     APIERR_MODEL_FAIL,
 		Msg:      "Failed to make request to data-model: %v",
+	},
+	APIERR_INDEX_FAIL: {
+		httpCode: http.StatusInternalServerError,
+		Code:     APIERR_INDEX_FAIL,
+		Msg:      "Failed to query word-index: %v",
 	},
 }
 
