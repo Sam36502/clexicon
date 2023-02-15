@@ -443,8 +443,7 @@ func (asyncBox *WordAsyncBox) Remove(object *Word) error {
 // Query provides a way to search stored objects
 //
 // For example, you can find all Word which ID is either 42 or 47:
-//
-//	box.Query(Word_.ID.In(42, 47)).Find()
+// 		box.Query(Word_.ID.In(42, 47)).Find()
 type WordQuery struct {
 	*objectbox.Query
 }

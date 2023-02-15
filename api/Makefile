@@ -1,0 +1,32 @@
+BIN = "clex_api"
+DOCKER_IMAGE = "clexicon_api"
+CONTAINER = "lexapi"
+
+.PHONY: help gen build image up down publish
+help: ## Lists all commands and their descriptions
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+gen: ## Generate ObjectBox Model
+	@echo "### Generating ObjectBox Model... ###"
+	@go generate ./...
+
+build: gen ## Builds the executable for linux
+	@echo "### Building Binary... ###"
+	@go build -o ${BIN} ./main.go
+	
+image: build ## Builds docker image
+	@echo "### Building Docker Image... ###"
+	@docker build -t ${DOCKER_IMAGE} .
+
+up: image ## Start docker image locally
+	@echo "### Starting Local Container... ###"
+	@docker run -dP --name ${CONTAINER} ${DOCKER_IMAGE}:latest
+
+down: ## Stop local docker image
+	@echo "### Stopping Local Container... ###"
+	@docker stop ${CONTAINER}
+	@docker rm ${CONTAINER}
+
+publish: image ## Publishes docker image to dockerhub
+	@echo "### Publishing Docker Image... ###"
+	@docker push

@@ -335,8 +335,7 @@ func (asyncBox *TagAsyncBox) Remove(object *Tag) error {
 // Query provides a way to search stored objects
 //
 // For example, you can find all Tag which ID is either 42 or 47:
-//
-//	box.Query(Tag_.ID.In(42, 47)).Find()
+// 		box.Query(Tag_.ID.In(42, 47)).Find()
 type TagQuery struct {
 	*objectbox.Query
 }

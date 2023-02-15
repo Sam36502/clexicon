@@ -11,7 +11,6 @@ var G_WordBox *WordBox
 // Queries
 var G_LangCodeQuery *LangQuery
 var G_TagQuery *TagQuery
-var G_WordSearchQuery *WordQuery
 
 func InitModel() error {
 	g_ObjBox, err := objectbox.NewBuilder().Model(ObjectBoxModel()).Build()
@@ -29,11 +28,6 @@ func InitModel() error {
 
 	// Set up word box and queries
 	G_WordBox = BoxForWord(g_ObjBox)
-	G_WordSearchQuery = G_WordBox.Query(
-		Word_.Orthography.Contains("", false),
-		Word_.Romanisation.Contains("", false),
-		Word_.Pronunciation.Contains("", false),
-	)
 
 	return nil
 }

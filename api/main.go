@@ -3,7 +3,6 @@ package main
 import (
 	"clexicon-api/model"
 	"clexicon-api/routes"
-	"clexicon-api/util"
 	"fmt"
 	"os"
 
@@ -14,21 +13,13 @@ func main() {
 	e := Initialisation()
 
 	// Start API
-	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", util.GlobalConfig.ApiPort)))
+	e.Logger.Fatal(e.Start(""))
 
 	Termination()
 }
 
 func Initialisation() *echo.Echo {
-
-	// Initialisation
 	var err error
-	err = util.InitConfig()
-	if err != nil {
-		fmt.Println("Failed to read config:", err)
-		os.Exit(1)
-	}
-
 	err = model.InitModel()
 	if err != nil {
 		fmt.Println("Failed to initialise data-model:", err)
