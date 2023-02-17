@@ -13,6 +13,10 @@ gen: ## Generate ObjectBox Model
 build: gen ## Builds the executable for linux
 	@echo "### Building Binary... ###"
 	@go build -o ${BIN} ./main.go
+
+run: build ## Runs the API locally
+	@echo "### Starting API... ###"
+	@./${BIN}
 	
 image: build ## Builds docker image
 	@echo "### Building Docker Image... ###"
@@ -20,7 +24,10 @@ image: build ## Builds docker image
 
 up: image ## Start docker image locally
 	@echo "### Starting Local Container... ###"
-	@docker run -dP --name ${CONTAINER} ${DOCKER_IMAGE}:latest
+	@docker run -dP \
+	       	--name ${CONTAINER} \
+		-v '/home/bismarck/clexicon/api/static:/static' \
+		${DOCKER_IMAGE}:latest
 
 down: ## Stop local docker image
 	@echo "### Stopping Local Container... ###"

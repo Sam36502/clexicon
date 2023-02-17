@@ -13,7 +13,7 @@ func main() {
 	e := Initialisation()
 
 	// Start API
-	e.Logger.Fatal(e.Start(""))
+	e.Logger.Fatal(e.Start(":34573"))
 
 	Termination()
 }

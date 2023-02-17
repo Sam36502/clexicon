@@ -1,11 +1,9 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
-RUN mkdir /data
-COPY clex_api /data/
+ADD clex_api /clex_api
+ADD static /static
+ADD objectboxlib/lib/libobjectbox.so /usr/local/lib/libobjectbox.so
+RUN ldconfig
 
-COPY install_ob.sh /data/
-RUN /data/install_ob.sh
-
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
-WORKDIR /data
-CMD ["./clex_api"]
+EXPOSE 34573
+CMD ["/clex_api"]

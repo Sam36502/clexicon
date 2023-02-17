@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Clexicon API</title>
+		<link rel="stylesheet" href="/hljs/styles/base16/edge-dark.min.css">
+		<link rel="stylesheet" href="/tachyons.min.css">
+	</head>
+	<body class="helvetica bg-near-white near-black">
+
+		<!-- Left -->
+		<div class="fl w-0 w-third-ns pa2"></div>
+		
+		<!-- Main Content -->
+		<div class="fl w-100 w-third-ns pa2">
+			<h1 class="f-headline bb b--black-10 lh-solid">Clexicon API</h1>
+
+			<h2 class="f2 light-red">Introduction</h2>
+
+			<p class="f5 lh-copy">
+				This page is just to confirm that the Clexicon API
+				is online and available, and to provide basic documentation
+				of the endpoints.
+			
+				I'm hoping to add some extra features in the future like
+				calculating the family-tree of a language or to get the full
+				etymology of a word. I'd also like to add export/import endpoints
+				for easy back-ups and restoration.
+			</p>
+
+			<h2 class="f2 light-red">Contents</h2>
+			<ul class="list">
+				<li>
+					<a href="#lang" class="f4 link blue hover-light-blue">Language</a>
+					<ul class="list">
+						<li><a href="#lang_get" class="f4 link blue hover-light-blue">GET: Get Language Info</a></li>
+						<li><a href="#lang_put" class="f4 link blue hover-light-blue">PUT: Update Language</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<h2 class="f2 light-red">Endpoints</h2>
+
+
+			<!-- LANGUAGE -->
+			<h3 id="lang" class="f3 red">
+				Language Endpoint
+			</h3>
+
+			<!-- GET -->
+			<div class="Endpoint">
+				<div id="lang_get" class="f4 pa2 bg-light-gray ba br2 b--black-10">
+					<code>GET</code>
+					<code>/lang</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint is used to retrieve a list of all
+					languages registered in this dictionary server.
+					The selection may be narrowed with the following
+					parameters though:
+				</p>
+				<strong class="b">Query Params:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Parameter</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>id</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The ID of the language to retrieve</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>code</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">Retrieves a single language by its unique code abbreviation such as "ME" for "Middle-English"</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+[
+	{
+		"id": 1,
+		"code": "Q",
+		"name": "Quenya",
+		"desc": "The High-elvish language invented by J.R.R. Tolkien",
+		"ancestors": [
+			"AQ"
+		]
+	},
+	{
+		"id": 2,
+		"code": "S",
+		"name": "Sindarin",
+		"desc": "The language of the Grey-Elves of Beleriand",
+		"ancestors": [
+			"CE"
+		]
+	}
+]
+				</code></pre>
+			</div>
+
+			<!-- PUT -->
+			<div class="Endpoint">
+				<div id="lang_put" class="f4 pa2 bg-light-gray ba br2 b--black-10 mt4">
+					<code>PUT</code>
+					<code>/lang</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint serves to add and update languages in the dictionary.
+					If an ID is provided with the data, it will try to update the existing
+					language with the provided information, otherwise It'll return an error
+					message. If no ID is provided, and the <code>code</code> parameter doesn't
+					conflict with any already in the database, it'll create a new language with
+					the provided information.
+					<br>
+					If the request succeeds, it will return an object with the ID of the
+					inserted/updated language.
+					<br>
+					Note: All the properties are optional, but any left out will be taken as
+					empty fields when updating the language.
+				</p>
+				<strong class="b">Request Body:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+	"id": 1,
+	"code": "Q",
+	"name": "Quenya",
+	"desc": "The High-elvish language invented by J.R.R. Tolkien",
+	"ancestors": [
+		"AQ"
+	]
+}
+				</code></pre>
+				<strong class="b">Property Info:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Property</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>id</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The ID of the language to update</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>code</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The unique abbreviation for this language</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>name</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The name of the language</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>desc</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">A brief description of the language</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>ancestors</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">An array of the codes of all the languages that this one has descended from</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+	"id": 1,
+}
+				</code></pre>
+			</div>
+
+
+		</div>
+		
+		<!-- Right -->
+		<div class="fl w-0 w-third-ns"></div>
+
+		<script src="/hljs/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+	</body>
+</html>
