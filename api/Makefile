@@ -1,6 +1,8 @@
 BIN = "clex_api"
-DOCKER_IMAGE = "clexicon_api"
+IMAGE = "clexicon_api"
 CONTAINER = "lexapi"
+REPO = "bismarck6502/"${IMAGE}
+VERSION = "1.0.0"
 
 .PHONY: help gen build image up down publish
 help: ## Lists all commands and their descriptions
@@ -20,14 +22,14 @@ run: build ## Runs the API locally
 	
 image: build ## Builds docker image
 	@echo "### Building Docker Image... ###"
-	@docker build -t ${DOCKER_IMAGE} .
+	@docker build -t ${IMAGE} .
 
 up: image ## Start docker image locally
 	@echo "### Starting Local Container... ###"
 	@docker run -dP \
 	       	--name ${CONTAINER} \
 		-v '/home/bismarck/clexicon/api/static:/static' \
-		${DOCKER_IMAGE}:latest
+		${IMAGE}:latest
 
 down: ## Stop local docker image
 	@echo "### Stopping Local Container... ###"
@@ -36,4 +38,5 @@ down: ## Stop local docker image
 
 publish: image ## Publishes docker image to dockerhub
 	@echo "### Publishing Docker Image... ###"
-	@docker push
+	@docker tag ${IMAGE} ${REPO}:${VERSION}
+	@docker push ${REPO}:${VERSION}
