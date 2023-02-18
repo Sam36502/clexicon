@@ -37,6 +37,17 @@
 						<li><a href="#lang_get" class="f4 link blue hover-light-blue">GET: Get Language Info</a></li>
 						<li><a href="#lang_put" class="f4 link blue hover-light-blue">PUT: Update Language</a></li>
 					</ul>
+					<a href="#tag" class="f4 link blue hover-light-blue">Tag</a>
+					<ul class="list">
+						<li><a href="#tag_get" class="f4 link blue hover-light-blue">GET: Get Tag Info</a></li>
+						<li><a href="#tag_put" class="f4 link blue hover-light-blue">PUT: Update Tag</a></li>
+					</ul>
+					<a href="#lang" class="f4 link blue hover-light-blue">Word</a>
+					<ul class="word">
+						<li><a href="#word_get" class="f4 link blue hover-light-blue">GET: Get Word</a></li>
+						<li><a href="#word_put" class="f4 link blue hover-light-blue">PUT: Update Word</a></li>
+					</ul>
+					<a href="#search" class="f4 link blue hover-light-blue">Search</a>
 				</li>
 			</ul>
 
@@ -180,6 +191,391 @@
 				</code></pre>
 			</div>
 
+
+			<!-- Tag Endpoint -->
+			<h3 id="tag" class="f3 red">
+				Tag Endpoint
+			</h3>
+
+			<!-- GET -->
+			<div class="Endpoint">
+				<div id="tag_get" class="f4 pa2 bg-light-gray ba br2 b--black-10">
+					<code>GET</code>
+					<code>/tag</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint is used to retrieve the Tags,
+                    which are used to mark different parts of speech. They
+                    are shared between languages and are identified by their
+                    <code>tag</code> field.
+				</p>
+				<strong class="b">Query Params:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Parameter</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>id</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The ID of the tag to retrieve</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>tag</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">Retrieves a single tag by its unique abbreviation such as "n" for "noun" or "pl" for "Plural"</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+[
+    {
+        "id":1,
+        "tag":"n",
+        "name":"Noun",
+        "desc":"Object-words"
+    },
+    {
+        "id":2,
+        "tag":"v",
+        "name":"Verb",
+        "desc":"Action-words"
+    },
+]
+				</code></pre>
+			</div>
+
+			<!-- PUT -->
+			<div class="Endpoint">
+				<div id="tag_put" class="f4 pa2 bg-light-gray ba br2 b--black-10 mt4">
+					<code>PUT</code>
+					<code>/tag</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint serves to add and update tags in the dictionary.
+					If an ID is provided with the data, it will try to update the existing
+					tag with the provided information, otherwise It'll return an error
+					message. If no ID is provided, and the <code>tag</code> parameter doesn't
+					conflict with any already in the database, it'll create a new tag with
+					the provided information.
+					<br>
+					If the request succeeds, it will return an object with the ID of the
+					inserted/updated tag.
+					<br>
+					Note: All the properties are optional, but any left out will be taken as
+					empty fields when updating the tag.
+				</p>
+				<strong class="b">Request Body:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+	"id": 1,
+	"name": "noun",
+	"desc": "Object-words",
+}
+				</code></pre>
+				<strong class="b">Property Info:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Property</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>id</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The ID of the tag to update</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>name</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The name of the tag</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>desc</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">A brief description of the tag</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+	"id": 1,
+}
+				</code></pre>
+			</div>
+
+
+			<!-- Word Endpoint -->
+			<h3 id="word" class="f3 red">
+				Tag Endpoint
+			</h3>
+
+			<!-- GET -->
+			<div class="Endpoint">
+				<div id="word_get" class="f4 pa2 bg-light-gray ba br2 b--black-10">
+					<code>GET</code>
+                    <code>/lang/&lt;lang-id&gt;/word;</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint is used to retrieve the words of
+                    a specific language. Unlike with the previous two
+                    endpoints though, making a GET request without
+                    any parameters will result in an error.
+                </p>
+				<strong class="b">Query Params:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Parameter</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>id</code></td>
+							<td class="pv2 ph3">Required</td>
+							<td class="pv2 ph3">The ID of the word to retrieve</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+    "id": 1,
+    "orthography": "",
+    "romanisation": "estel",
+    "ipa": "e.'stel",
+    "meanings": [
+        "hope",
+        "trust",
+        "faith"
+    ],
+    "tags": [
+        {
+            "id": 1,
+            "tag": "n",
+            "name": "Noun",
+            "desc": "Object-words"
+        }
+    ],
+    "etymology": "",
+    "root": 0,
+    "notes": "",
+    "language": {
+        "id": 1,
+        "code": "Q",
+        "name": "Quenya",
+        "desc": "High-elvish language invented by J.R.R. Tolkien",
+        "ancestors": [
+            "AQ"
+        ]
+    }
+}
+				</code></pre>
+			</div>
+
+			<!-- PUT -->
+			<div class="Endpoint">
+				<div id="word_put" class="f4 pa2 bg-light-gray ba br2 b--black-10 mt4">
+					<code>PUT</code>
+					<code>/lang/&lt;lang-id&gt;/word;</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint serves to add and update words in a lang's dictionary.
+					If an ID is provided with the data, it will try to update the existing
+					word with the provided information, otherwise It'll return an error
+					message. If no ID is provided it'll create a new word with the provided
+                    information.
+					<br>
+					If the request succeeds, it will return an object with the ID of the
+					inserted/updated word.
+					<br>
+					Note: All the properties are optional, but any left out will be taken as
+					empty fields when updating the word.
+				</p>
+				<strong class="b">Request Body:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+    "id": 1,
+    "orthography": "",
+    "romanisation": "estel",
+    "ipa": "e.'stel",
+    "meanings": [
+        "hope",
+        "trust",
+        "faith"
+    ],
+    "tags": [
+        {
+            "id": 1,
+        }
+    ],
+    "etymology": "",
+    "root": 0,
+    "notes": "",
+    "language": {
+        "id": 1,
+    }
+}
+				</code></pre>
+				<strong class="b">Property Info:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Property</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>id</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The ID of the word to update</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>orthography</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">
+                                The way the speakers of the language would write 
+                                this word or the text to use when displaying it
+                                with a custom font
+                            </td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>romanisation</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">A rendering of the word in the latin alphabet</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>ipa</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The International Phonetic Alphabet (IPA) transcription of the word</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>meanings</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">
+                                An array of the meanings of the word. Try to add as
+                                many as possible to increase the chance of finding
+                                it in a search later.
+                            </td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>tags</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">
+                                Array of all the Tags which apply to this word.
+                                Just using the ID is enough to add it, but you
+                                can also provide all the fields to add the tag
+                                as well as the word.
+                            </td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>etymology</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">
+                                A string describing the etymology of the word.
+                                No specific format is specified at the moment,
+                                but one might be made later for standardising
+                                etymology parsing.
+                            </td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>root</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The ID of the root word this is an inflection/variation of.</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>notes</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">A field for generic notes about the word</td>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>language</code></td>
+							<td class="pv2 ph3">Optional</td>
+							<td class="pv2 ph3">The language this word is in</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+	"id": 1,
+}
+				</code></pre>
+			</div>
+
+
+			<!-- Search Endpoint -->
+			<h3 id="search" class="f3 red">
+				Search Endpoint
+			</h3>
+
+			<!-- GET -->
+			<div class="Endpoint">
+				<div id="word_get" class="f4 pa2 bg-light-gray ba br2 b--black-10">
+					<code>GET</code>
+                    <code>/lang/&lt;lang-id&gt;/search;</code>
+				</div>
+				<p class="lh-copy">
+					This endpoint is used to retrieve the words of
+                    a specific language by a search query instead
+                    of by ID. the string provided with <code>q</code>
+                    will try to fuzz-match any of the word's fields.
+                </p>
+				<strong class="b">Query Params:</strong>
+				<table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
+					<tbody>
+						<tr class="striped--light-gray">
+							<th class="tl f6 ttu fw6 pv2 ph3">Parameter</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Required</th>
+							<th class="tl f6 ttu fw6 pv2 ph3">Description</th>
+						</tr>
+						<tr class="striped--light-gray">
+							<td class="pv2 ph3"><code>q</code></td>
+							<td class="pv2 ph3">Required</td>
+							<td class="pv2 ph3">The terms to search for in the words</td>
+						</tr>
+					</tbody>
+				</table>
+				<strong>Example Result:</strong>
+				<pre><code class="hljs language-json ma3 br3">
+{
+    "id": 1,
+    "orthography": "",
+    "romanisation": "estel",
+    "ipa": "e.'stel",
+    "meanings": [
+        "hope",
+        "trust",
+        "faith"
+    ],
+    "tags": [
+        {
+            "id": 1,
+            "tag": "n",
+            "name": "Noun",
+            "desc": "Object-words"
+        }
+    ],
+    "etymology": "",
+    "root": 0,
+    "notes": "",
+    "language": {
+        "id": 1,
+        "code": "Q",
+        "name": "Quenya",
+        "desc": "High-elvish language invented by J.R.R. Tolkien",
+        "ancestors": [
+            "AQ"
+        ]
+    }
+}
+				</code></pre>
+			</div>
 
 		</div>
 		
