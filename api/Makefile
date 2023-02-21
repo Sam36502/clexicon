@@ -2,7 +2,7 @@ BIN = "clex_api"
 IMAGE = "clexicon_api"
 CONTAINER = "lexapi"
 REPO = "bismarck6502/"${IMAGE}
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 .PHONY: help gen build image up down publish
 help: ## Lists all commands and their descriptions

@@ -346,7 +346,8 @@ func (asyncBox *LangAsyncBox) Remove(object *Lang) error {
 // Query provides a way to search stored objects
 //
 // For example, you can find all Lang which ID is either 42 or 47:
-// 		box.Query(Lang_.ID.In(42, 47)).Find()
+//
+//	box.Query(Lang_.ID.In(42, 47)).Find()
 type LangQuery struct {
 	*objectbox.Query
 }

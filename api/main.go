@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -34,6 +35,9 @@ func Initialisation() *echo.Echo {
 
 	e := echo.New()
 	routes.InitRoutes(e)
+
+	// Middleware
+	e.Use(middleware.CORS())
 
 	return e
 }
