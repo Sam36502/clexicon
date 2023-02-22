@@ -5,7 +5,7 @@
 
     // TODO: Make url ENV var or something
     onMount(async () => {
-        fetch("http://192.168.0.4:49156/lang")
+        fetch("http://192.168.0.4:49157/lang")
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -26,24 +26,9 @@
 
     <h2 class="f2 f1-ns light-red">List of Languages:</h2>
 
-    <table class="collapse ma3 ba br2 b--black-10 pv2 ph3">
-        <thead>
-            <tr class="striped--light-gray">
-                <th class="tl f6 ttu fw6 pv2 ph3">Name</th>
-                <th class="tl f6 ttu fw6 pv2 ph3">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            {#each langs as lang}
-            <a class="link" href="/dict/{lang.id}">
-                <tr class="striped--light-gray">
-                    <td class="pv2 ph3">{lang.name}</td>
-                    <td class="pv2 ph3">{lang.desc}</td>
-                </tr>
-            </a>
-            {/each}
-
-        </tbody>
-    </table>
+    <ul class="list">
+        {#each langs as lang}
+        <a href="/lang/{lang.id}" class="f4 link blue hover-light-blue">{lang.name} - {lang.desc}</a>
+        {/each}
+    </ul>
 </main>
