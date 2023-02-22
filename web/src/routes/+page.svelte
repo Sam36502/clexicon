@@ -1,14 +1,15 @@
 <script>
+    import { PUBLIC_API_URL } from '$env/static/public';
     import { onMount } from "svelte";
 
     let langs = [];
 
-    // TODO: Make url ENV var or something
+    const url = new URL(PUBLIC_API_URL + "/lang");
+
     onMount(async () => {
-        fetch("http://192.168.0.4:49157/lang")
+        fetch(url.href)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 langs = data;
             }).catch(error => {
                 console.log(error);
