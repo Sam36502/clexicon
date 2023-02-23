@@ -25,11 +25,15 @@
         TODO: Think of something appropriate to put on the home page
     </p>
 
-    <h2 class="f2 f1-ns light-red">List of Languages:</h2>
+    <h2 class="f2 f1-ns light-red">Languages</h2>
 
     <ul class="list">
-        {#each langs as lang}
-        <a href="/lang/{lang.id}" class="f4 link blue hover-light-blue">{lang.name} - {lang.desc}</a>
-        {/each}
+        {#if langs.length > 0}
+            {#each langs as lang}
+            <li><a href="/lang/{lang.id}" class="f4 link blue hover-light-blue">{lang.name} - {lang.desc}</a></li>
+            {/each}
+            <li><span class="f5 lh-copy">None yet...</span></li>
+            <li><a href="/lang/set" class="f4 link blue hover-light-blue">Why not make one?</a></li>
+        {/if}
     </ul>
 </main>

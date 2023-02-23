@@ -1,4 +1,5 @@
-<script> import Word from './Word.svelte';
+<script>
+    import Word from './Word.svelte';
 
     export let data;
 
