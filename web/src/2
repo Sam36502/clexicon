@@ -30,10 +30,10 @@
 
 <h2 class="f2 f1-ns light-red">Dictionary</h2>
 
-<div class="mv3">
-    <form on:submit={search} onsubmit="return false;">
+<div class="mv2">
+    <form>
         <input type="text" class="f4 ba br2 pv2 ph3 input-reset" bind:value={query}>
-        <input type="button" class="f4 ba br2 b--mid-gray pv2 ph4 link dim white bg-mid-gray pointer" value="Search!" on:click={search}>
+        <input type="submit" class="f4 ba br2 b--mid-gray pv2 ph4 link dim white bg-mid-gray pointer" value="Search!" on:click={search}>
     </form>
 </div>
 

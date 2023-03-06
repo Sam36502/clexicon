@@ -22,7 +22,7 @@
 
 </script>
 
-<a href={'/lang/' + langID + '/word/' + word.id} class="h4 pv3 link db black hoverbg">
+<a href={'/lang/' + langID + '/word/' + word.id} class="h4 link db black hoverbg" style="padding-top:1.5rem;">
 
     <div class="fl w-20 ph2">
         {word.orthography}
