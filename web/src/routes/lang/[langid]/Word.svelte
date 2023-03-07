@@ -22,14 +22,14 @@
 
 </script>
 
-<a href={'/lang/' + langID + '/word/' + word.id} class="h4 link db black hoverbg" style="padding-top:1.5rem;">
+<a href={'/lang/' + langID + '/word/' + word.id} class="cf pv2 link db black hoverbg">
 
     <div class="fl w-20 ph2">
         {word.orthography}
         &nbsp;
     </div>
 
-    <div class="fl w-20 ph2 br b--silver tr">
+    <div class="fl w-20 pa2 br b--silver tr">
         <strong class="f3">{word.romanisation}</strong><br>
         {#each word.tags as tag}
         <i class="link underline-hover" title="{tag.name} - {tag.desc}">{tag.tag}.</i>

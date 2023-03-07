@@ -34,7 +34,7 @@
         <ul class="list">
             {#if langs.length > 0}
                 {#each langs as lang}
-                <li><a href="/lang/{lang.id}" class="f4 link blue hover-light-blue">{lang.name} - {lang.desc}</a></li>
+                <li class="pv2"><a href="/lang/{lang.id}" class="f4 link blue hover-light-blue">{lang.name} - {lang.desc}</a></li>
                 {/each}
             {:else}
                 <li><span class="f5 lh-copy">None yet...</span></li>

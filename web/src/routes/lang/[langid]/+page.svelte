@@ -28,6 +28,8 @@
     {data.lang.desc}
 </p>
 
+<a class="f4 link blue hover-light-blue" href="/lang/set?id={data.lang.id}">Edit language</a>
+
 <h2 class="f2 f1-ns light-red">Dictionary</h2>
 
 <div class="mv3">
