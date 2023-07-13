@@ -53,7 +53,24 @@
 
             <h2 class="f2 light-red">Endpoints</h2>
 
+            <h3 class="f3 red">Error Response</h3>
+            <p class="f5 lh-copy">
+                Before describing any of the endpoints, it's also important to know what to expect
+                if something goes <i>pear-shaped</i>.
 
+                In addition to the usual HTTP error-code,
+                an error response will be returned with a <code>code</code> field, which
+                contains a unique string identifying what sort of error has occurred, and
+                a <code>msg</code> field with a more in-depth, somewhat human-readable description of what went wrong.
+            </p>
+            <strong>Example Result:</strong>
+            <pre><code class="hljs language-json ma3 br3">
+{
+    "code": "invalid_object",
+    "msg": "Invalid object parameter provided: code=400, message=Unmarshal type error: expected=uint64, got=number -1, field=id, offset=14, internal=json: cannot unmarshal number -1 into Go struct field Word.id of type uint64"
+}
+            </code></pre>
+            
             <!-- LANGUAGE -->
             <h3 id="lang" class="f3 red">
                 Language Endpoint
